@@ -74,7 +74,7 @@
 
 <style lang="stylus" scoped>
     .login
-        background-image url("../assets/sayagata-400px.png")
+        background-image url("../assets/a.jpg")
         position absolute
         width 100%
         height 100%

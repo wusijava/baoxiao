@@ -1,7 +1,7 @@
 <template>
     <div class="box">
         <Breadcrumb>
-            <BreadcrumbItem>报销管理</BreadcrumbItem>
+            <BreadcrumbItem>新增报销记录</BreadcrumbItem>
             <BreadcrumbItem :to="{name:'merchantList'}">报销列表</BreadcrumbItem>
             <BreadcrumbItem>报销详情</BreadcrumbItem>
         </Breadcrumb>
@@ -20,9 +20,7 @@
                                         <p>商品总价<span>{{detail.totalPrice}}</span></p>
                                         <p>购买渠道<span>{{detail.buyChannel}}</span></p>
                                         <p>购买日期<span>{{detail.buyDate}}</span></p>
-                                        <p>上交单据时间<span>{{detail.reimbursementDate}}</span></p>
-                                        <p>报销到账时间<span>{{detail.remitDate}}</span></p>
-                                        <p>报销状态<span>{{detail.state}}</span></p>
+
                                         <p>备注<span>{{detail.remark}}</span></p>
                                     </div>
                                     <div class="detailsInfo" v-if="edit == 1">
@@ -56,7 +54,7 @@
 <script>
     import {detail,updateMerchant} from "../../api/merchant";
     export default {
-        name: "merchantDetail",
+        name: "Add",
         data() {
             return {
                 detail:{},

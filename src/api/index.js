@@ -1,8 +1,8 @@
 const method = {
     merchant:{
-        list: '/api/web/authorize/merchant/list',
-        detail: '/api/web/authorize/merchant/detail',
-        updateMerchant: '/api/web/authorize/merchant/updateMerchant',
+        list: '/productList',
+        detail: '/toDetails',
+        updateMerchant: '/update',
         batchExport: '/api/web/excel/import/batchExportMerchant',
         batchImport: '/api/web/excel/import/batchImportMerchant',
         getAreaListByLevelOrParentCode: '/api/web/area/getAreaListByLevelOrParentCode',
@@ -34,9 +34,9 @@ const method = {
         batchExport:'/api/web/pay/refund/order/batchExport',
     },
     user:{
-        login:'/api/web/user/login',
-        permissionList:'/api/web/permission/list',
-        changePassword:'/api/web/user/changePassword'
+        login:'/login',
+        permissionList:'/list',
+        changePassword:'/api/web/user/changePassword',
     },
     blacklist:{
         list:'/api/web/authorize/redpackblacklist/list',

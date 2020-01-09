@@ -1,24 +1,21 @@
 <template>
     <div class="box">
         <Breadcrumb>
-            <BreadcrumbItem>商户管理</BreadcrumbItem>
-            <BreadcrumbItem>商户列表</BreadcrumbItem>
+            <BreadcrumbItem>报销管理</BreadcrumbItem>
+            <BreadcrumbItem>报销列表</BreadcrumbItem>
         </Breadcrumb>
         <div class="form-box">
             <div class="search">
-                <Input clearable v-model="query.wayId" placeholder="输入渠道编码" style="width: 200px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
-                <Input clearable v-model="query.name" placeholder="输入收款人" style="width: 200px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
-                <Input clearable v-model="query.sellerNo" placeholder="输入收款账号" style="width: 200px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
-                <DatePicker type="daterange" v-model="dateRange" style="width: 200px" placeholder="请选择注册时间"></DatePicker>&nbsp;&nbsp;
-                <Select v-model="query.state" clearable style="width: 150px; margin-right: 10px" placeholder="请选择注册状态">
+                <Input clearable v-model="query.productName" placeholder="输入商品名称" style="width: 200px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
+                <DatePicker type="daterange" v-model="dateRange" style="width: 200px" placeholder="购买时间范围"></DatePicker>
+                <Select v-model="query.state" clearable style="width: 150px; margin-right: 10px" placeholder="报销状态">
                     <Option v-for="item in stateList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                 </Select>
-                <Select v-model="query.storeCityCode" clearable style="width: 150px; margin-right: 10px" placeholder="请选择地区">
-                    <Option v-for="item in areaList" :value="item.code" :key="item.code">{{ item.name }}</Option>
-                </Select>
+
                 <Button slot="append" icon="ios-search" @click="beginSearch(0)">搜索</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="batchExport">导出</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="showImport">导入</Button>&nbsp;&nbsp;
+                <Button type="primary" @click="add">新增报销记录</Button>
             </div>
             <div class="list">
                 <Table size="small" :columns="columns" :data="list">
@@ -44,7 +41,7 @@
 <script>
     import moment from 'moment'
     import storage from '../../storage'
-    import {list,batchExport,getAreaListByLevelOrParentCode} from "../../api/merchant";
+    import {list,batchExport} from "../../api/merchant";
     import axios from "../../config/axios";
     import batchImportUrl from "../../api/index";
 
@@ -57,97 +54,50 @@
                     {
                         title: '序号',
                         type: 'index',
-                        width: 60,
-                        align: 'center'
-                    },
-                    {
-                        title: '渠道编码',
-                        key: 'wayId',
-                        width: 150
-                    },
-                    {
-                        title: '商户号',
-                        key: 'merchantNo',
                         width: 200,
                         align: 'center'
                     },
                     {
-                        title: '收款人',
-                        key: 'name',
+                        title: '商品名称',
+                        key: 'productName',
+                        width: 150
+                    },
+                    {
+                        title: '总价格',
+                        key: 'totalPrice',
                         width: 100,
+                        align: 'center'
+                    },
+                    {
+                        title: '购买渠道',
+                        key: 'buyChannel',
+                        width: 200,
                         tooltip: true
                     },
                     {
-                        title: '收款账号',
-                        key: 'sellerNo',
+                        title: '购买时间',
+                        key: 'buyDate',
+                        width: 100
+                    },
+                    {
+                        title: '上交报销单时间',
+                        key: 'reimbursementDate',
                         width: 200
                     },
                     {
-                        title: '联系人',
-                        key: 'contactName',
-                        width: 100
-                    },
-                    {
-                        title: '联系电话',
-                        key: 'contactPhone',
-                        width: 150
-                    },
-                    {
-                        title: '门店编码',
-                        key: 'storeNo',
-                        width: 200,
-                    },
-                    {
-                        title: '门店名称',
-                        key: 'storeName',
-                        width: 200,
-                        tooltip: true
-                    },
-                    {
-                        title: '营业执照名称',
-                        key: 'storeSubjectName',
-                        width: 200,
-                        tooltip: true
-                    },
-                    {
-                        title: '营业执照编号',
-                        key: 'storeSubjectCertNo',
+                        title: '报销到账时间',
+                        key: 'remitDate',
                         width: 200
                     },
                     {
-                        title: '省',
-                        key: 'storeProvince',
-                        width: 100
+                        title: '报销状态',
+                        key: 'state',
+                        width: 150,
                     },
                     {
-                        title: '市',
-                        key: 'storeCity',
-                        width: 100
-                    },
-                    {
-                        title: '区',
-                        key: 'storeCounty',
-                        width: 100
-                    },
-                    {
-                        title: '当前状态',
-                        key: 'stateStr',
-                        width: 100
-                    },
-                    {
-                        title: '红包领取状态',
-                        key: 'redPackState',
-                        width: 100
-                    },
-                    {
-                        title: '创建时间',
-                        key: 'createTime',
-                        width: 150
-                    },
-                    {
-                        title: '原因',
-                        key: 'reason',
-                        width: 200,
+                        title: '备注',
+                        key: 'remark',
+                        width: 100,
                         tooltip: true
                     },
                     {
@@ -156,23 +106,20 @@
                         width: 150,
                         align: 'center'
                     }
+
                 ],
                 list: [],
                 stateList: [
-                    {value:'',label:'全部状态'},
-                    {value:'-1',label:'注册失败'},
-                    {value:'0',label:'等待注册'},
-                    {value:'1',label:'注册成功'},
-                ],
-                areaList: [
+                    {value:'-1',label:'未报销'},
+                    {value:'0',label:'报销中'},
+                    {value:'1',label:'已报销'},
                 ],
                 page: {
                     currentPage: 0,
                     count: 10,
                     total: 0
                 },
-                query:{
-
+                query: {
                 },
                 importModal:false,
                 importData:false,
@@ -183,7 +130,6 @@
         },
         mounted() {
              this.getList(this.page.currentPage, this.page.count);
-             this.getAreaListByLevelOrParentCode();
         },
         methods: {
             showImport() {
@@ -194,6 +140,10 @@
             },
             toDetail(row){
                 this.$router.push({path: '/merchant/detail', query: {id: row.id}})
+                console.log(row.id)
+            },
+            add(){
+                this.$router.push({path: '/merchant/add'})
             },
             beginSearch(isSearch) {
                 if (isSearch == 0) {
@@ -205,18 +155,10 @@
                 let query = new Object()
                 query.page = cp;
                 query.limit = c;
-                if (this.query.name){
-                    query.name = this.query.name;
+                if (this.query.productName){
+                    query.productName = this.query.productName;
                 }
-                if (this.query.wayId){
-                    query.wayId = this.query.wayId;
-                }
-                if (this.query.sellerNo){
-                    query.sellerNo = this.query.sellerNo;
-                }
-                if (this.query.storeCityCode){
-                    query.storeCityCode = this.query.storeCityCode;
-                }
+
                 if (this.query.state){
                     query.state = this.query.state;
                 }
@@ -230,28 +172,13 @@
                     this.page.total = result.data.totalElements
                 }
             },
-            getAreaListByLevelOrParentCode: async function() {
-                let query = new Object();
-                query.level = 2;
-                const result = await getAreaListByLevelOrParentCode(query);
-                if (result.code == 20000) {
-                    this.areaList = result.data;
-                }
-            },
+
             batchExport: async function () {
                 let query = new Object()
-                if (this.query.name){
-                    query.name = this.query.name;
+                if (this.query.productName){
+                    query.productName = this.query.productName;
                 }
-                if (this.query.wayId){
-                    query.wayId = this.query.wayId;
-                }
-                if (this.query.sellerNo){
-                    query.sellerNo = this.query.sellerNo;
-                }
-                if (this.query.storeCityCode){
-                    query.storeCityCode = this.query.storeCityCode;
-                }
+
                 if (this.query.state){
                     query.state = this.query.state;
                 }
