@@ -8,22 +8,14 @@
 
         <div class="form-box">
             <Button type="primary" class="tab-right" v-if="edit == 0" @click="toEdit">编辑</Button>
-            <Button type="primary" class="tab-right" v-if="edit == 1" @click="save">保存</Button>
+            <Button type="primary" class="tab-right"  @click="save">保存</Button>
             <Tabs name="tab" value="a" class="imgView">
                 <TabPane label="报销信息" name="a" tab="tab">
                     <div class="content">
                         <Row>
                             <Col span="11">
                                 <div class="box-right">
-                                    <div class="detailsInfo" v-if="edit == 0">
-                                        <p>商品名称<span>{{detail.productName}}</span></p>
-                                        <p>商品总价<span>{{detail.totalPrice}}</span></p>
-                                        <p>购买渠道<span>{{detail.buyChannel}}</span></p>
-                                        <p>购买日期<span>{{detail.buyDate}}</span></p>
-
-                                        <p>备注<span>{{detail.remark}}</span></p>
-                                    </div>
-                                    <div class="detailsInfo" v-if="edit == 1">
+                                    <div class="detailsInfo" >
                                         <p>商品名称<span><Input type="text" v-model="detail.productName" size="small"
                                                             style="width: 250px"/></span></p>
                                         <p>商品总价<span><Input type="text" v-model="detail.totalPrice" size="small"
@@ -32,12 +24,6 @@
                                                             style="width: 250px"/></span></p>
                                         <p>购买日期<span><Input type="text" v-model="detail.buyDate" size="small"
                                                             style="width: 250px"/></span></p>
-                                        <p>上交单据时间<span><Input type="text" v-model="detail.reimbursementDate" size="small"
-                                                              style="width: 250px"/></span></p>
-                                        <p>报销到账时间<span><Input type="text" v-model="detail.remitDate" size="small"
-                                                                style="width: 250px"/></span></p>
-                                        <p>状态<span><Input type="text" v-model="detail.state"
-                                                          size="small" style="width: 250px"/></span></p>
                                         <p>备注<span><Input type="text" v-model="detail.remark" size="small"
                                                           style="width: 250px"/></span></p>
                                     </div>
@@ -52,7 +38,7 @@
 </template>
 
 <script>
-    import {detail,updateMerchant} from "../../api/merchant";
+    import {detail,save} from "../../api/merchant";
     export default {
         name: "Add",
         data() {
@@ -71,11 +57,10 @@
             },
             save: async function () {
                 let query = this.detail;
-                const result = await updateMerchant(query)
+                const result = await save(query)
                 if (result.code == 20000) {
-                    this.$Message.success("修改成功")
-                    this.getDetail();
-                    this.edit =0;
+                    this.$Message.success("添加成功！")
+                    this.$router.push({path: '/merchant/list'})
                 }else {
                     this.$Message.error(result.msg);
                 }

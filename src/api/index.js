@@ -5,7 +5,7 @@ const method = {
         updateMerchant: '/update',
         batchExport: '/api/web/excel/import/batchExportMerchant',
         batchImport: '/api/web/excel/import/batchImportMerchant',
-        getAreaListByLevelOrParentCode: '/api/web/area/getAreaListByLevelOrParentCode',
+        save: '/save',
     },
     trade:{
         list:'/api/web/pay/order/list',

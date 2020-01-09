@@ -11,8 +11,8 @@ export async function detail(params){
     return result.data;
 }
 
-export async function updateMerchant(params){
-    const result = await axios.post(api.merchant.updateMerchant,params);
+export async function save(params){
+    const result = await axios.post(api.merchant.save,params);
     return result.data;
 }
 
