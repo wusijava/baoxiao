@@ -2,10 +2,11 @@ const method = {
     merchant:{
         list: '/productList',
         detail: '/toDetails',
-        updateMerchant: '/update',
-        batchExport: '/api/web/excel/import/batchExportMerchant',
-        batchImport: '/api/web/excel/import/batchImportMerchant',
+        update: '/update',
+        batchExport: '/Export',
+        batchImport: '/Import',
         save: '/save',
+        del: '/del',
     },
     trade:{
         list:'/api/web/pay/order/list',

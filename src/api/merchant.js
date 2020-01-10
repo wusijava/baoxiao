@@ -21,7 +21,16 @@ export async function batchExport(params){
     return result.data;
 }
 
-export async function getAreaListByLevelOrParentCode(params){
-    const result = await axios.post(api.merchant.getAreaListByLevelOrParentCode, params)
+export async function batchImport(params){
+    const result = await axios.post(api.merchant.batchImport, params)
+    return result.data;
+}
+
+export async function updateMerchant(params){
+    const result = await axios.post(api.merchant.update, params)
+    return result.data;
+}
+export async function del(params){
+    const result = await axios.post(api.merchant.del, params)
     return result.data;
 }

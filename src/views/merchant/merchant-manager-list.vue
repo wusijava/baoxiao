@@ -21,6 +21,7 @@
                 <Table size="small" :columns="columns" :data="list">
                     <template slot-scope="{ row, index }" slot="action">
                         <Button type="primary" size="small" style="margin-right: 5px" @click="toDetail(row)" >详情</Button>
+                        <Button type="primary" size="small" style="margin-right: 5px" @click="del(row)" >删除</Button>
                     </template>
                 </Table>
             </div>
@@ -28,10 +29,10 @@
                 <Page class-name="page" size="small" :total="page.total" :page-size="page.count" @on-change="changePage" />
             </div>
         </div>
-        <Modal v-model="importModal" title="导入商户信息" :mask-closable="false" footer-hide @on-cancel="hideImport">
+        <Modal v-model="importModal" title="导入报销信息" :mask-closable="false" footer-hide @on-cancel="hideImport">
             <Upload ref="upload" :action="importUrl"
                     :format="['xls','xlsx']" :headers="header" :on-success="batchImport">
-                <Button type="primary" icon="md-cloud-upload">导入商户信息</Button>
+                <Button type="primary" icon="md-cloud-upload">导入报销信息</Button>
             </Upload>
             <div style="text-align: right" v-show="importData">{{tip}}</div>
         </Modal>
@@ -41,7 +42,7 @@
 <script>
     import moment from 'moment'
     import storage from '../../storage'
-    import {list,batchExport} from "../../api/merchant";
+    import {list,batchExport,del} from "../../api/merchant";
     import axios from "../../config/axios";
     import batchImportUrl from "../../api/index";
 
@@ -152,6 +153,7 @@
                 this.getList(this.page.currentPage, this.page.count)
             },
             getList: async function (cp, c) {
+                console.log("进入getlist");
                 let query = new Object()
                 query.page = cp;
                 query.limit = c;
@@ -195,15 +197,32 @@
             },
             batchImport(response) {
                 if (response.code == 20000) {
+                    this.getList(this.page.currentPage, this.page.count);
                     this.$Message.success("导入成功")
                     this.hideImport();
-                    location.href = response.data;
                 } else {
                     this.$Message.error(response.msg)
                 }
             },
             changePage: function (cp) {
                 this.getList((cp - 1), this.page.count)
+            },del:async function(row){
+                let query = new Object()
+                query.id =row.id;
+                this.$Modal.confirm({
+                    title: '提醒',
+                    content: '<p>您即将删除一条信息!</p><p>请您确认当前操作</p>',
+                    loading: true,
+                    onOk: () => {
+                       del(query);
+                        this.$Modal.remove();
+
+                            this.$Message.success("删除成功!")
+                        this.getList(this.page.currentPage, this.page.count);
+
+                    },
+                })
+                console.log(666)
             },
         }
     }
