@@ -55,50 +55,50 @@
                     {
                         title: '序号',
                         type: 'index',
-                        width: 200,
+                        width: 80,
                         align: 'center'
                     },
                     {
                         title: '商品名称',
                         key: 'productName',
-                        width: 150
+                        width: 450
                     },
                     {
                         title: '总价格',
                         key: 'totalPrice',
-                        width: 100,
+                        width: 80,
                         align: 'center'
                     },
                     {
                         title: '购买渠道',
                         key: 'buyChannel',
-                        width: 200,
+                        width: 100,
                         tooltip: true
                     },
                     {
                         title: '购买时间',
                         key: 'buyDate',
-                        width: 100
+                        width: 150
                     },
                     {
                         title: '上交报销单时间',
                         key: 'reimbursementDate',
-                        width: 200
+                        width: 150
                     },
                     {
                         title: '报销到账时间',
                         key: 'remitDate',
-                        width: 200
+                        width: 150
                     },
                     {
                         title: '报销状态',
                         key: 'state',
-                        width: 150,
+                        width: 100,
                     },
                     {
                         title: '备注',
                         key: 'remark',
-                        width: 100,
+                        width: 200,
                         tooltip: true
                     },
                     {
