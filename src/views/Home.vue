@@ -12,6 +12,9 @@
                 <div class="content">
                     <router-view></router-view>
                 </div>
+            <div class="beian">
+                <a href="http://beian.miit.gov.cn" target="_blank">京ICP备19055240号-1</a>
+            </div>
             </Col>
         </Row>
     </div>
@@ -55,7 +58,7 @@
                         //     query: {
                         //         t: Date.now()
                         //     }})
-                        location.reload();
+                        location.href="http://www.wearelie.com";
                     }
                 })
             },
