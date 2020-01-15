@@ -16,6 +16,7 @@
                 <Button type="primary" @click="batchExport">导出</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="showImport">导入</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="add">新增报销记录</Button>
+                <Button type="primary" @click="down">下载</Button>
             </div>
             <div class="list">
                 <Table size="small" :columns="columns" :data="list">
@@ -36,13 +37,15 @@
             </Upload>
             <div style="text-align: right" v-show="importData">{{tip}}</div>
         </Modal>
+
+
     </div>
 </template>
 
 <script>
     import moment from 'moment'
     import storage from '../../storage'
-    import {list,batchExport,del} from "../../api/merchant";
+    import {list,batchExport,del,down} from "../../api/merchant";
     import axios from "../../config/axios";
     import batchImportUrl from "../../api/index";
 
@@ -145,6 +148,11 @@
             },
             add(){
                 this.$router.push({path: '/merchant/add'})
+            },
+            down:async function() {
+                console.log("down")
+                 await down();
+                console.log("down2")
             },
             beginSearch(isSearch) {
                 if (isSearch == 0) {
