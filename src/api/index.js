@@ -7,7 +7,7 @@ const method = {
         batchImport: '/Import',
         save: '/save',
         del: '/del',
-        down:'/filedownload',
+        down:'/ok',
     },
     trade:{
         list:'/api/web/pay/order/list',

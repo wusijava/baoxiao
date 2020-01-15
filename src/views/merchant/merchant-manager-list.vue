@@ -150,9 +150,12 @@
                 this.$router.push({path: '/merchant/add'})
             },
             down:async function() {
-                console.log("down")
-                 await down();
-                console.log("down2")
+                const result = await down();
+                if (result.code == 20000) {
+                    location.href = "http://127.0.0.1:8083/fileDownload";
+                }else {
+                    this.$Message.error(result.msg);
+                }
             },
             beginSearch(isSearch) {
                 if (isSearch == 0) {
@@ -161,7 +164,6 @@
                 this.getList(this.page.currentPage, this.page.count)
             },
             getList: async function (cp, c) {
-                console.log("进入getlist");
                 let query = new Object()
                 query.page = cp;
                 query.limit = c;
