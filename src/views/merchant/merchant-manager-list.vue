@@ -45,7 +45,7 @@
 <script>
     import moment from 'moment'
     import storage from '../../storage'
-    import {list,batchExport,del,down} from "../../api/merchant";
+    import {list,batchExport,del} from "../../api/merchant";
     import axios from "../../config/axios";
     import batchImportUrl from "../../api/index";
 
@@ -144,18 +144,18 @@
             },
             toDetail(row){
                 this.$router.push({path: '/merchant/detail', query: {id: row.id}})
-                console.log(row.id)
             },
             add(){
                 this.$router.push({path: '/merchant/add'})
             },
             down:async function() {
-                const result = await down();
+                location.href = "http://49.233.192.222:8083/fileDownload";
+               /* const result = await down();
                 if (result.code == 20000) {
-                    location.href = "http://127.0.0.1:8083/fileDownload";
+
                 }else {
                     this.$Message.error(result.msg);
-                }
+                }*/
             },
             beginSearch(isSearch) {
                 if (isSearch == 0) {

@@ -7,7 +7,7 @@ const method = {
         batchImport: '/Import',
         save: '/save',
         del: '/del',
-        down:'/ok',
+
     },
     trade:{
         list:'/api/web/pay/order/list',
@@ -52,7 +52,7 @@ const method = {
         updateDetail:'/api/web/setMeal/updateDetail'
     },
     refundApply:{
-        list:'/api/web/pay/refund/apply/list',
+        list:'/logList',
         refundApply: '/api/web/pay/refund/apply/refundApply',
         refundByPerson: '/api/web/pay/refund/apply/refundByPerson',
         refundByAuto: '/api/web/pay/refund/apply/refundByAuto',

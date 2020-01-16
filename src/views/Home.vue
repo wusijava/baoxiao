@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <jd-menu name="报销平台" width="200"></jd-menu>
+        <jd-menu name="八哥犬" width="200"></jd-menu>
         <Row>
             <Col span="21" offset="3">
                 <div class="header">

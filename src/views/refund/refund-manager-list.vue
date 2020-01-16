@@ -1,32 +1,23 @@
 <template>
     <div class="box">
         <Breadcrumb>
-            <BreadcrumbItem>退款管理</BreadcrumbItem>
-            <BreadcrumbItem>退款列表</BreadcrumbItem>
+            <BreadcrumbItem>淘宝记账</BreadcrumbItem>
+            <BreadcrumbItem>销售记录</BreadcrumbItem>
         </Breadcrumb>
         <div class="form-box">
             <div class="search">
-                <Input clearable v-model="query.outTradeNo" placeholder="输入订单号" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
-                <Input clearable v-model="query.outOrderNo" placeholder="输入外部订单号" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
-                <Input clearable v-model="query.wayId" placeholder="输入渠道编码" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
-                <DatePicker type="daterange" v-model="dateRange" style="width: 150px" placeholder="请选择发起时间"></DatePicker>&nbsp;&nbsp;
-                <Select v-model="query.refundState" clearable style="width: 150px; margin-right: 10px" placeholder="请选择退款状态">
-                    <Option v-for="item in stateList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
-                <Select v-model="query.redPackState" clearable style="width: 150px; margin-right: 10px" placeholder="请选择红包状态">
-                    <Option v-for="item in rsList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
-                <Select v-model="query.repaymentState" clearable style="width: 150px; margin-right: 10px" placeholder="请选择垫资状态">
-                    <Option v-for="item in rpsList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                </Select>
+                <Input clearable v-model="query.outTradeNo" placeholder="输入销售订单号" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
+                <Input clearable v-model="query.outOrderNo" placeholder="输入购买订单号" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
+                <Input clearable v-model="query.wayId" placeholder="输入商品名称" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
+                <DatePicker type="daterange" v-model="dateRange" style="width: 150px" placeholder="订单时间范围"></DatePicker>&nbsp;&nbsp;
                 <Button slot="append" icon="ios-search" @click="beginSearch(0)">搜索</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="batchExport">导出</Button>&nbsp;&nbsp;
             </div>
             <div class="list">
                 <Table size="small" :columns="columns" :data="list">
                     <template slot-scope="{ row }" slot="action">
-                        <Button type="primary" size="small" style="margin-right: 5px" v-if="row.refundState==2" @click="toCheck(row)" >审核</Button>
-                        <Button type="primary" size="small" style="margin-right: 5px" v-if="row.refundState==2" @click="toReject(row)" >驳回</Button>
+                        <Button type="primary" size="small" style="margin-right: 5px" @click="toDetail(row)" >详情</Button>
+                        <Button type="primary" size="small" style="margin-right: 5px" @click="del(row)" >删除</Button>
 
                     </template>
                 </Table>
@@ -35,39 +26,7 @@
                 <Page class-name="page" size="small" :total="page.total" :page-size="page.count" @on-change="changePage" />
             </div>
 
-            <Modal v-model="checkModal" title="操作提醒">
-                <p>是否解冻金额并结清贷款？</p>
-                <div slot="footer">
-                    <!--<Button @click="reject">驳回</Button>-->
-                    <Button type="primary" @click="submit">确定</Button>
-                </div>
-            </Modal>
 
-            <Modal v-model="rejectModal" title="操作提醒">
-                <Form :model="formItem" :label-width="120">
-                    <FormItem label="请输入驳回原因">
-                        <Input v-model="formItem.reason" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="驳回原因"/>
-                    </FormItem>
-                </Form>
-                <div slot="footer">
-                    <Button type="primary" @click="reject">确定</Button>
-                </div>
-            </Modal>
-
-            <modal v-model="selectExport" width="550px"  :mask-closable="false">
-                <p slot="header" style="color:#000000;text-align:center">
-                    是否对以下敏感字段进行加密
-                </p>
-            </modal>
-
-            <Modal
-                    v-model="confirmModal"
-                    :loading="loading"
-                    :title="confirmTitle"
-                    @on-ok="settle"
-                    @on-cancel="clearModal">
-                <p>{{confirmContent}}</p>
-            </Modal>
         </div>
 
     </div>
@@ -78,7 +37,7 @@
     import {list,batchExport,update} from "../../api/refundApply";
 
     export default {
-        name: "trade-list",
+        name: "logDetail",
         data() {
             return {
                 dateRange: [],
@@ -90,115 +49,62 @@
                         align: 'center'
                     },
                     {
-                        title: '订单号',
-                        key: 'outTradeNo',
-                        width: 200,
-                        align: 'center'
-                    },
-                    {
-                        title: '外部订单号',
-                        key: 'outOrderNo',
-                        width: 200,
-                        align: 'center'
-                    },
-                    {
-                        title: '授权订单号',
-                        key: 'authNo',
-                        width: 250,
-                        align: 'center'
-                    },
-                    {
-                        title: '渠道编码',
-                        key: 'wayId',
+                        title: '商品名称',
+                        key: 'product',
                         width: 150,
                         align: 'center'
                     },
                     {
-                        title: '发起时间',
-                        key: 'createTime',
-                        width: 200,
+                        title: '买家姓名',
+                        key: 'buyerName',
+                        width: 100,
                         align: 'center'
                     },
                     {
-                        title: '退款时间',
-                        key: 'refundTime',
+                        title: '销售订单号',
+                        key: 'myOrderNo',
+                        width: 150,
+                        align: 'center'
+                    },
+                    {
+                        title: '销售金额',
+                        key: 'sellMoney',
+                        width: 150,
+                        align: 'center'
+                    },
+                    {
+                        title: '购买订单号',
+                        key: 'amyOrderNo',
+                        width: 150,
+                        align: 'center'
+                    },
+                    {
+                        title: '购买金额',
+                        key: 'buyMoney',
+                        width: 150,
+                        align: 'center'
+                    },
+                    {
+                        title: '利润',
+                        key: 'profit',
+                        width: 100,
+                        align: 'center'
+                    },
+                    {
+                        title: '退款',
+                        key: 'refund',
+                        width: 100,
+                        align: 'center'
+                    },
+                    {
+                        title: '备注',
+                        key: 'remark',
                         width: 200,
                         align: 'center'
                     },
                     {
                         title: '交易时间',
-                        key: 'dealTime',
-                        width: 200,
-                        align: 'center'
-                    },
-                    {
-                        title: '直降金额',
-                        key: 'amount',
-                        width: 150,
-                        align: 'center'
-                    },
-                    {
-                        title: '红包金额',
-                        key: 'redPackAmount',
-                        width: 150,
-                        align: 'center'
-                    },
-                    {
-                        title: '应退金额',
-                        key: 'transferAmount',
-                        width: 150,
-                    },
-                    {
-                        title: '支付/转账单号',
-                        key: 'alipayTransferOrderNo',
-                        width: 200,
-                        align: 'center'
-                    },
-                    {
-                        title: '支付/转账单号',
-                        key: 'alipayTransferOrderNo',
-                        width: 200,
-                        align: 'center'
-                    },
-                    {
-                        title: '转账支付宝实名',
-                        key: 'alipayName',
-                        width: 200,
-                        align: 'center'
-                    },
-                    {
-                        title: '转账支付宝账号',
-                        key: 'alipayAccount',
-                        width: 200,
-                        align: 'center'
-                    },
-                    {
-                        title: '红包状态',
-                        key: 'redPackStateDesc',
-                        width: 150,
-                        align: 'center'
-                    },
-                    {
-                        title: '加急状态',
-                        key: 'urgentStateDesc',
-                        width: 150,
-                        align: 'center'
-                    },
-                    {
-                        title: '退款方式',
-                        key: 'refundTypeDesc',
-                        width: 150,
-                        align: 'center'
-                    },
-                    {
-                        title: '垫资回款状态',
-                        key: 'repaymentStateDesc',
-                        width: 150,
-                        align: 'center'
-                    },
-                    {
-                        title: '退款状态',
-                        key: 'refundStateDesc',
+                        key: 'orderDate',
                         width: 150,
                         align: 'center'
                     },
@@ -210,68 +116,7 @@
                     }
                 ],
                 list: [],
-                stateList: [
-                    {
-                        value: '',
-                        label: '全部状态'
-                    },
-                    {
-                        value: '0',
-                        label: '等待支付'
-                    },
-                    {
-                        value: '-1',
-                        label: '退款失败'
-                    },
-                    {
-                        value: '1',
-                        label: '退款成功'
-                    },
-                    {
-                        value: '2',
-                        label: '退款中'
-                    },
-                    {
-                        value: '3',
-                        label: '取消退款'
-                    },
-                ],
-                rpsList: [
-                    {
-                        value: '',
-                        label: '全部状态'
-                    },
-                    {
-                        value: '0',
-                        label: '无需结清'
-                    },
-                    {
-                        value: '3',
-                        label: '回款成功'
-                    },
-                    {
-                        value: '2',
-                        label: '等待回款'
-                    },
-                    {
-                        value: '1',
-                        label: '结清贷款'
-                    }
-                ],
-                rsList: [
-                    {
-                        value: '',
-                        label: '全部状态'
-                    },
-                    {
-                        value: '1',
-                        label: '已领取'
-                    },
-                    {
-                        value: '0',
-                        label: '未领取'
-                    },
-                ],
+
                 page: {
                     currentPage: 0,
                     count: 10,
@@ -295,6 +140,7 @@
         mounted() {
              this.getList(this.page.currentPage, this.page.count);
         },
+
         methods: {
             beginSearch(isSearch) {
                 if (isSearch == 0) {
@@ -302,28 +148,24 @@
                 }
                 this.getList(this.page.currentPage, this.page.count)
             },
+            toDetail(row){
+                this.$router.push({path: '/refundRecord/detail', query: {id: row.id}})
+                console.log(row.id)
+            },
             getList: async function (cp, c) {
                 let query = new Object()
                 query.page = cp;
                 query.limit = c;
-                if (this.query.outTradeNo){
-                    query.outTradeNo = this.query.outTradeNo;
+                if (this.query.myOrderNo){
+                    query.myOrderNo = this.query.myOrderNo;
                 }
-                if (this.query.outOrderNo){
-                    query.outOrderNo = this.query.outOrderNo;
+                if (this.query.amyOrderNo){
+                    query.amyOrderNo = this.query.amyOrderNo;
                 }
-                if (this.query.refundState){
-                    query.refundState = this.query.refundState;
+                if (this.query.product){
+                    query.product = this.query.product;
                 }
-                if (this.query.redPackState){
-                    query.redPackState = this.query.redPackState;
-                }
-                if (this.query.repaymentState){
-                    query.repaymentState = this.query.repaymentState;
-                }
-                if (this.query.wayId){
-                    query.wayId = this.query.wayId;
-                }
+
                 if (this.dateRange[0] != '' && this.dateRange[1] != '') {
                     query.startTime = moment(this.dateRange[0]).format('YYYY-MM-DD')
                     query.endTime = moment(this.dateRange[1]).format('YYYY-MM-DD')
