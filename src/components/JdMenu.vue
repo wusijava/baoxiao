@@ -2,18 +2,16 @@
     <div class="menu">
         <div class="logo">
             <h1>
-                <Icon type="md-cube" size="40"/>&nbsp;&nbsp;{{name}}
+                <Icon rel="icon"  href="<%= BASE_URL %>favicon.ico" size="40"/>&nbsp;&nbsp;{{name}}
             </h1>
         </div>
         <Menu ref="leftMenu" :theme="theme" :active-name="activeName" width="auto" :open-names="activeMenu"
               accordion @on-select="activeNav" @on-open-change="activeParentMenu">
             <Submenu :name="menu.name" v-for="(menu,index) in menus" :key="index">
                 <template slot="title">
-                    <Icon :type="menu.icon"/>
                     {{menu.title}}
                 </template>
                 <MenuItem :name="submenu.name" v-if="submenu.type == 1" v-for="(submenu,index) in menu.submenus" :key="index" :to="{name: submenu.name}">
-                    <Icon :type="submenu.icon"/>
                     {{submenu.title}}
                 </MenuItem>
             </Submenu>
@@ -73,16 +71,16 @@
         position fixed
         z-index 999
         width 12.5%
-        background-color #e8eaec
+        background-color #CCCCCC
         height 100%
 
         .logo
             height 74px
             display flex
             align-items center
-            background #5b6270
+            background #CCCCCC
             padding 10px 10px 10px 40px
-            border-bottom 1px solid #e8eaec
+            border-bottom 1px solid #CCCCCC
             img
                 width 100px
             h1

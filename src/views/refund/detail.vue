@@ -16,34 +16,38 @@
                             <Col span="11">
                                 <div class="box-right">
                                     <div class="detailsInfo" v-if="edit == 0">
-                                        <p>商品名称<span>{{detail.productName}}</span></p>
-                                        <p>买家姓名<span>{{detail.totalPrice}}</span></p>
-                                        <p>销售订单号<span>{{detail.buyChannel}}</span></p>
-                                        <p>销售金额<span>{{detail.buyDate}}</span></p>
-                                        <p>购买订单号<span>{{detail.reimbursementDate}}</span></p>
-                                        <p>购买金额<span>{{detail.remitDate}}</span></p>
-                                        <p>利润<span>{{detail.state}}</span></p>
-                                        <p>退款金额<span>{{detail.remark}}</span></p>
+                                        <p>商品名称<span>{{detail.product}}</span></p>
+                                        <p>买家姓名<span>{{detail.buyerName}}</span></p>
+                                        <p>销售订单号<span>{{detail.myOrderNo}}</span></p>
+                                        <p>销售金额<span>{{detail.sellMoney}}</span></p>
+                                        <p>购买订单号<span>{{detail.amyOrderNo}}</span></p>
+                                        <p>购买金额<span>{{detail.buyMoney}}</span></p>
+                                        <p>利润<span>{{detail.profit}}</span></p>
+                                        <p>退款金额<span>{{detail.refund}}</span></p>
                                         <p>备注<span>{{detail.remark}}</span></p>
-                                        <p>购买日期<span>{{detail.remark}}</span></p>
+                                        <p>购买日期<span>{{detail.orderDate}}</span></p>
                                     </div>
                                     <div class="detailsInfo" v-if="edit == 1">
-                                        <p>商品名称<span><Input type="text" v-model="detail.productName" size="small"
+                                        <p>商品名称<span><Input type="text" v-model="detail.product" size="small"
                                                             style="width: 250px"/></span></p>
-                                        <p>商品总价<span><Input type="text" v-model="detail.totalPrice" size="small"
+                                        <p>买家姓名<span><Input type="text" v-model="detail.buyerName" size="small"
                                                             style="width: 250px"/></span></p>
-                                        <p>购买渠道<span><Input type="text" v-model="detail.buyChannel" size="small"
+                                        <p>销售订单号<span><Input type="text" v-model="detail.myOrderNo" size="small"
                                                             style="width: 250px"/></span></p>
-                                        <p>购买日期<span><Input type="text" v-model="detail.buyDate" size="small"
+                                        <p>销售金额<span><Input type="text" v-model="detail.sellMoney" size="small"
                                                             style="width: 250px"/></span></p>
-                                        <p>上交单据时间<span><Input type="text" v-model="detail.reimbursementDate" size="small"
+                                        <p>购买订单号<span><Input type="text" v-model="detail.amyOrderNo" size="small"
                                                               style="width: 250px"/></span></p>
-                                        <p>报销到账时间<span><Input type="text" v-model="detail.remitDate" size="small"
+                                        <p>购买金额<span><Input type="text" v-model="detail.buyMoney" size="small"
                                                                 style="width: 250px"/></span></p>
-                                        <p>状态<span><Input type="text" v-model="detail.state"
+                                        <p>利润<span><Input type="text" v-model="detail.profit"
                                                           size="small" style="width: 250px"/></span></p>
-                                        <p>备注<span><Input type="text" v-model="detail.remark" size="small"
+                                        <p>退款金额<span><Input type="text" v-model="detail.refund" size="small"
                                                           style="width: 250px"/></span></p>
+                                        <p>备注<span><Input type="text" v-model="detail.remark" size="small"
+                                                            style="width: 250px"/></span></p>
+                                        <p>购买日期<span><Input type="text" v-model="detail.orderDate" size="small"
+                                                            style="width: 250px"/></span></p>
                                     </div>
                                 </div>
                             </Col>
@@ -56,7 +60,7 @@
 </template>
 
 <script>
-    import {detail,updateMerchant} from "../../api/merchant";
+    import {detail,updateLog} from "../../api/refund";
     export default {
         name: "logDetail",
         data() {
@@ -95,6 +99,17 @@
                 if (result.code == 20000) {
                     console.log(2)
                     this.detail = result.data;
+                }
+            },
+            save: async function () {
+                let query = this.detail;
+                const result = await updateLog(query)
+                if (result.code == 20000) {
+                    this.$Message.success("修改成功")
+                    this.getDetail();
+                    this.edit =0;
+                }else {
+                    this.$Message.error(result.msg);
                 }
             },
         }

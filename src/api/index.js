@@ -30,8 +30,8 @@ const method = {
     },
     refund:{
         list:'/api/web/pay/refund/order/list',
-        changeRedPacketState:'/api/web/pay/refund/order/changeRedPacketState',
-        changeRepaymentState:'/api/web/pay/refund/order/changeRepaymentState',
+        logDetail:'/logDetail',
+        updateLog:'/updateLog',
         settle:'/api/web/pay/refund/order/settle',
         batchExport:'/api/web/pay/refund/order/batchExport',
     },
@@ -58,7 +58,7 @@ const method = {
         refundByAuto: '/api/web/pay/refund/apply/refundByAuto',
         update: '/api/web/pay/refund/apply/update',
         urgent: '/api/web/pay/refund/apply/urgent',
-        batchExport: '/api/web/pay/refund/apply/batchExport',
+        batchExport: '/logExport',
         selectRefundCount: '/api/web/pay/refund/apply/selectRefundCount',
     },
 }

@@ -6,9 +6,10 @@
         </Breadcrumb>
         <div class="form-box">
             <div class="search">
-                <Input clearable v-model="query.outTradeNo" placeholder="输入销售订单号" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
-                <Input clearable v-model="query.outOrderNo" placeholder="输入购买订单号" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
-                <Input clearable v-model="query.wayId" placeholder="输入商品名称" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
+                <Input clearable v-model="query.myOrderNo" placeholder="输入销售订单号" style="width: 150px" @on-clear="beginSearch(0)"/>
+                <Input clearable v-model="query.buyerName" placeholder="买家姓名" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
+                <Input clearable v-model="query.amyOrderNo" placeholder="输入购买订单号" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
+                <Input clearable v-model="query.product" placeholder="输入商品名称" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
                 <DatePicker type="daterange" v-model="dateRange" style="width: 150px" placeholder="订单时间范围"></DatePicker>&nbsp;&nbsp;
                 <Button slot="append" icon="ios-search" @click="beginSearch(0)">搜索</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="batchExport">导出</Button>&nbsp;&nbsp;
@@ -17,7 +18,6 @@
                 <Table size="small" :columns="columns" :data="list">
                     <template slot-scope="{ row }" slot="action">
                         <Button type="primary" size="small" style="margin-right: 5px" @click="toDetail(row)" >详情</Button>
-                        <Button type="primary" size="small" style="margin-right: 5px" @click="del(row)" >删除</Button>
 
                     </template>
                 </Table>
@@ -165,7 +165,9 @@
                 if (this.query.product){
                     query.product = this.query.product;
                 }
-
+                if (this.query.buyerName){
+                    query.buyerName = this.query.buyerName;
+                }
                 if (this.dateRange[0] != '' && this.dateRange[1] != '') {
                     query.startTime = moment(this.dateRange[0]).format('YYYY-MM-DD')
                     query.endTime = moment(this.dateRange[1]).format('YYYY-MM-DD')
@@ -241,23 +243,17 @@
             },
             batchExport: async function () {
                 let query = new Object()
-                if (this.query.outTradeNo){
-                    query.outTradeNo = this.query.outTradeNo;
+                if (this.query.myOrderNo){
+                    query.myOrderNo = this.query.myOrderNo;
                 }
-                if (this.query.outOrderNo){
-                    query.outOrderNo = this.query.outOrderNo;
+                if (this.query.amyOrderNo){
+                    query.amyOrderNo = this.query.amyOrderNo;
                 }
-                if (this.query.refundState){
-                    query.refundState = this.query.refundState;
+                if (this.query.product){
+                    query.product = this.query.product;
                 }
-                if (this.query.redPackState){
-                    query.redPackState = this.query.redPackState;
-                }
-                if (this.query.repaymentState){
-                    query.repaymentState = this.query.repaymentState;
-                }
-                if (this.query.wayId){
-                    query.wayId = this.query.wayId;
+                if (this.query.buyerName){
+                    query.buyerName = this.query.buyerName;
                 }
                 if (this.dateRange[0] != '' && this.dateRange[1] != '') {
                     query.startTime = moment(this.dateRange[0]).format('YYYY-MM-DD')

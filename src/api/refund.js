@@ -6,14 +6,14 @@ export async function list(params){
     return result.data;
 }
 
-export async function changeRedPacketState(params){
-    const result = await axios.post(api.refund.changeRedPacketState,params);
+export async function detail(params){
+    const result = await axios.post(api.refund.logDetail,params);
     return result.data;
 }
 
 
-export async function settle(params){
-    const result = await axios.post(api.refund.settle,params);
+export async function updateLog(params){
+    const result = await axios.post(api.refund.updateLog,params);
     return result.data;
 }
 

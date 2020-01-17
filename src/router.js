@@ -8,7 +8,7 @@ Router.prototype.push = function push(location) {
 }
 
 export default new Router({
-    mode: 'history',
+    mode: 'hash',
     // base: 'admin',
     routes: [
         {

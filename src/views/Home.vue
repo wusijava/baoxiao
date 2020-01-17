@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <jd-menu name="八哥犬" width="200"></jd-menu>
+        <jd-menu name="小力之家" width="200"></jd-menu>
         <Row>
             <Col span="21" offset="3">
                 <div class="header">
@@ -70,16 +70,16 @@
         position fixed
         z-index 999
         width 12.5%
-        background-color #e8eaec
+        background-color #CCCCCC
         height 100%
 
         .logo
             height 74px
             display flex
             align-items center
-            background #5b6270
+            background #CCCCCC
             padding 10px 10px 10px 40px
-            border-bottom 1px solid #e8eaec
+            border-bottom 1px solid #CCCCCC
             img
                 width 100px
             h1
@@ -93,11 +93,11 @@
     .header
         text-align right
         height 74px
-        background-color #5b6270
+        background-color #CCCCCC
         display flex
         align-items center
         justify-content flex-end
-        border-bottom 1px solid #e8eaec
+        border-bottom 1px solid #CCCCCC
 
         span
             margin-right 22px
