@@ -7,8 +7,8 @@ import Router from "vue-router";
 Vue.use(Router);
 
 //const baseURL = 'http://116.62.11.124'
-// const baseURL = 'http://172.16.4.9:8888'
-const baseURL = 'http://127.0.0.1:8083'
+//const baseURL = 'http://172.16.4.162:8083'
+const baseURL = 'http://49.233.192.222:8083'
 const myAxios = {
     post: async function (url, param) {
         let result = await axios.post(url, param, {
