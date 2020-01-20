@@ -14,7 +14,7 @@
 
                 <Button slot="append" icon="ios-search" @click="beginSearch(0)">搜索</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="batchExport">导出</Button>&nbsp;&nbsp;
-                <Button type="primary" @click="showImport">导入</Button>&nbsp;&nbsp;
+                <Button type="primary" @click="showImport">导入数据</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="add">新增报销记录</Button>&nbsp;
                 <Button type="primary" @click="down">下载导入模板</Button>
             </div>
