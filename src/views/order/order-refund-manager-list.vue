@@ -67,7 +67,7 @@
 
 <script>
     import moment from 'moment';
-    import {list,settle,refund,batchExport,getAreaListByLevelOrParentCode} from "../../api/trade";
+    import {list,settle,refund,batchExport,getAreaListByLevelOrParentCode} from "../../api/spend";
 
     export default {
         name: "trade-list",

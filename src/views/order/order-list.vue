@@ -94,7 +94,7 @@
 
 <script>
     import moment from 'moment';
-    import {list,batchExport} from "../../api/trade";
+    import {list,batchExport} from "../../api/spend";
     import {refundApply,selectRefundCount} from "../../api/refundApply";
     export default {
         name: "trade-list",

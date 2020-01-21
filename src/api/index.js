@@ -9,12 +9,12 @@ const method = {
         del: '/del',
 
     },
-    trade:{
-        list:'/api/web/pay/order/list',
-        settle:'/api/web/pay/order/settle',
-        refund:'/api/web/pay/order/refund',
-        batchExport: '/api/web/pay/order/batchExport',
-        getAreaListByLevelOrParentCode: '/api/web/area/getAreaListByLevelOrParentCode',
+    spend:{
+        list:'/spendList',
+        detail:'/spendDetail',
+        spendUpdate:'/spendUpdate',
+        del: '/spendDel',
+        save: '/saveSpend',
     },
     packet:{
         list:'/api/web/red/packet/list',
