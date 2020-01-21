@@ -12,7 +12,7 @@
                 <Input clearable v-model="query.product" placeholder="输入商品名称" style="width: 150px" @on-clear="beginSearch(0)"/>&nbsp;&nbsp;
                 <DatePicker type="daterange" v-model="dateRange" style="width: 150px" placeholder="订单时间范围"></DatePicker>&nbsp;&nbsp;
                 <Button slot="append" icon="ios-search" @click="beginSearch(0)">搜索</Button>&nbsp;&nbsp;
-                <Button type="primary" @click="batchExport">导出表格</Button>&nbsp;&nbsp;
+                <Button type="primary" @click="batchExport">导出Excel</Button>&nbsp;&nbsp;
             </div>
             <div class="list">
                 <Table size="small" :columns="columns" :data="list">
