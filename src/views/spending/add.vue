@@ -24,7 +24,7 @@
                                             <Option v-for="item in stateList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select></span></p>
                                         <p></p>
-                                        <p style="height: 200px">消费日期<DatePicker type="date" v-model="detail.date" style="width: 200px" placeholder="消费时间范围"></DatePicker></p>
+                                        <p style="height: 200px">消费日期<DatePicker type="date" v-model="detail.date" style="width: 200px" placeholder="选择消费时间"></DatePicker></p>
                                         <p>备注<span><Input type="text" v-model="detail.remark" size="small"
                                                           style="width: 250px"/></span></p>
                                     </div>

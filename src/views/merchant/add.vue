@@ -22,7 +22,7 @@
                                                             style="width: 250px"/></span></p>
                                         <p>购买渠道<span><Input type="text" v-model="detail.buyChannel" size="small"
                                                             style="width: 250px"/></span></p>
-                                        <p style="height: 200px">购买日期<DatePicker type="date" v-model="detail.buyDate" style="width: 200px" placeholder="消费时间范围"></DatePicker></p>
+                                        <p style="height: 200px">购买日期<DatePicker type="date" v-model="detail.buyDate" style="width: 200px" placeholder="选择购买日期"></DatePicker></p>
                                         <p>备注<span><Input type="text" v-model="detail.remark" size="small"
                                                           style="width: 250px"/></span></p>
                                     </div>
