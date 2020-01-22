@@ -72,7 +72,7 @@
                 }
 
                 let query =this.detail;
-                console.log("1"+query.date)
+                //console.log("1"+query.date)
 
                 const result = await save(query)
                 if (result.code == 20000) {
@@ -91,7 +91,7 @@
                 }
                 const result = await detail(query)
                 if (result.code == 20000) {
-                    console.log(2)
+                   // console.log(2)
                     this.detail = result.data;
                 }
             },
