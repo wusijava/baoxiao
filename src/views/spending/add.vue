@@ -20,10 +20,11 @@
                                                             style="width: 250px"/></span></p>
                                         <p>支出<span><Input type="text" v-model="detail.price" size="small"
                                                             style="width: 250px"/></span></p>
-                                        <p>消费者<span><Input type="text" v-model="detail.consumer" size="small"
-                                                            style="width: 250px"/></span></p>
-                                        <p>消费日期<span><Input type="text" v-model="detail.date" size="small"
-                                                            style="width: 250px"/></span></p>
+                                        <p style="height: 200px">消费者 &nbsp;<span><Select v-model="detail.consumer" clearable style="width: 250px; margin-right: 10px" placeholder="消费者">
+                                            <Option v-for="item in stateList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                        </Select></span></p>
+                                        <p></p>
+                                        <p style="height: 200px">消费日期<DatePicker type="date" v-model="detail.date" style="width: 200px" placeholder="消费时间范围"></DatePicker></p>
                                         <p>备注<span><Input type="text" v-model="detail.remark" size="small"
                                                           style="width: 250px"/></span></p>
                                     </div>
@@ -39,12 +40,21 @@
 
 <script>
     import {detail,save} from "../../api/spend";
+    import moment from 'moment';
     export default {
         name: "spendAdd",
         data() {
             return {
                 detail:{},
                 edit:0,
+                stateList: [
+                    {value:'吴思',label:'吴思'},
+                    {value:'张明霞',label:'张明霞'},
+                    {value:'吴艺橙',label:'吴艺橙'},
+                    {value:'小力',label:'小力'},
+                    {value:'家庭',label:'家庭'},
+                    {value:'其他',label:'其他'},
+                ],
             }
         },
         mounted() {
@@ -55,7 +65,15 @@
                 this.edit =1;
             },
             save: async function () {
-                let query = this.detail;
+                if (this.detail.date != '') {
+                    //为什么非要写成this.detail.date
+                    this.detail.date = moment(this.detail.date).format('YYYY-MM-DD')
+
+                }
+
+                let query =this.detail;
+                console.log("1"+query.date)
+
                 const result = await save(query)
                 if (result.code == 20000) {
                     this.$Message.success("添加成功！")

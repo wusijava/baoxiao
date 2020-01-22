@@ -22,8 +22,7 @@
                                                             style="width: 250px"/></span></p>
                                         <p>购买渠道<span><Input type="text" v-model="detail.buyChannel" size="small"
                                                             style="width: 250px"/></span></p>
-                                        <p>购买日期<span><Input type="text" v-model="detail.buyDate" size="small"
-                                                            style="width: 250px"/></span></p>
+                                        <p style="height: 200px">购买日期<DatePicker type="date" v-model="detail.buyDate" style="width: 200px" placeholder="消费时间范围"></DatePicker></p>
                                         <p>备注<span><Input type="text" v-model="detail.remark" size="small"
                                                           style="width: 250px"/></span></p>
                                     </div>
@@ -39,6 +38,7 @@
 
 <script>
     import {detail,save} from "../../api/merchant";
+    import moment from 'moment';
     export default {
         name: "Add",
         data() {
@@ -56,6 +56,13 @@
                 this.edit =1;
             },
             save: async function () {
+                if (this.detail.buyDate != '') {
+                    //console.log(date)
+
+                    //为什么moment后面的非要写成this.detail.date 不然不会成功赋值
+                    this.detail.buyDate = moment(this.detail.buyDate).format('YYYY-MM-DD')
+
+                }
                 let query = this.detail;
                 const result = await save(query)
                 if (result.code == 20000) {
