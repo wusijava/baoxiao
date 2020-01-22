@@ -20,8 +20,9 @@
                                                             style="width: 250px"/></span></p>
                                         <p>商品总价<span><Input type="text" v-model="detail.totalPrice" size="small"
                                                             style="width: 250px"/></span></p>
-                                        <p>购买渠道<span><Input type="text" v-model="detail.buyChannel" size="small"
-                                                            style="width: 250px"/></span></p>
+                                        <p>购买渠道<span><Select v-model="detail.buyChannel" clearable style="width: 250px; margin-right: 10px" placeholder="选择购买渠道">
+                                            <Option v-for="item in stateList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                        </Select></span></p>
                                         <p style="height: 200px">购买日期<DatePicker type="date" v-model="detail.buyDate" style="width: 200px" placeholder="选择购买日期"></DatePicker></p>
                                         <p>备注<span><Input type="text" v-model="detail.remark" size="small"
                                                           style="width: 250px"/></span></p>
@@ -45,6 +46,12 @@
             return {
                 detail:{},
                 edit:0,
+                stateList: [
+                    {value:'淘宝',label:'淘宝'},
+                    {value:'京东',label:'京东'},
+                    {value:'线下',label:'线下'},
+                    {value:'其他',label:'其他'},
+                ],
             }
         },
         mounted() {
