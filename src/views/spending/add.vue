@@ -1,7 +1,7 @@
 <template>
     <div class="box">
         <Breadcrumb>
-            <BreadcrumbItem>新增消费记录</BreadcrumbItem>
+            <BreadcrumbItem>家庭记账</BreadcrumbItem>
             <BreadcrumbItem :to="{name:'spend'}">家庭开支</BreadcrumbItem>
             <BreadcrumbItem>添加消费信息</BreadcrumbItem>
         </Breadcrumb>
@@ -16,11 +16,11 @@
                             <Col span="11">
                                 <div class="box-right">
                                     <div class="detailsInfo" >
-                                        <p>消费明细<span><Input type="text" v-model="detail.item" size="small"
+                                        <p style="height:50px">消费明细<span><Input type="text" v-model="detail.item" size="small"
                                                             style="width: 250px"/></span></p>
-                                        <p>支出<span><Input type="text" v-model="detail.price" size="small"
+                                        <p style="height:50px">支出<span><Input type="text" v-model="detail.price" size="small"
                                                             style="width: 250px"/></span></p>
-                                        <p style="height: 200px">消费者 &nbsp;<span><Select v-model="detail.consumer" clearable style="width: 250px; margin-right: 10px" placeholder="消费者">
+                                        <p style="height:200px">消费者<span><Select v-model="detail.consumer" clearable style="width: 250px; margin-right: 10px" placeholder="消费者">
                                             <Option v-for="item in stateList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                         </Select></span></p>
                                         <p></p>
