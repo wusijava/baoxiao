@@ -24,3 +24,8 @@ export async function save(params){
     const result = await axios.post(api.spend.save,params);
     return result.data;
 }
+//out
+export async function out(params){
+    const result = await axios.post(api.spend.out,params);
+    return result.data;
+}

@@ -15,6 +15,7 @@ const method = {
         spendUpdate:'/spendUpdate',
         del: '/spendDel',
         save: '/saveSpend',
+        out: '/out'
     },
     packet:{
         list:'/api/web/red/packet/list',

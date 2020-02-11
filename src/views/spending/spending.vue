@@ -15,6 +15,7 @@
                 <Button slot="append" icon="ios-search" @click="beginSearch(0)">搜索</Button>&nbsp;&nbsp;
                <!-- <Button type="primary" @click="batchExport">导出报表</Button>&nbsp;-->&nbsp;
                 <Button type="primary" @click="add">新增消费记录</Button>&nbsp;
+                <Button type="primary" @click="out">导出</Button>&nbsp;
 
             </div>
             <div class="list">
@@ -38,7 +39,7 @@
 <script>
     import moment from 'moment'
     import storage from '../../storage'
-    import {list,batchExport,del} from "../../api/spend";
+    import {list,out,del} from "../../api/spend";
     import axios from "../../config/axios";
     import batchImportUrl from "../../api/index";
 
@@ -150,20 +151,20 @@
                 }
             },
 
-            batchExport: async function () {
+            out: async function () {
                 let query = new Object()
-                if (this.query.productName){
-                    query.productName = this.query.productName;
+                if (this.query.item){
+                    query.item = this.query.item;
                 }
 
-                if (this.query.state){
-                    query.state = this.query.state;
+                if (this.query.consumer){
+                    query.consumer = this.query.consumer;
                 }
                 if (this.dateRange[0] != '' && this.dateRange[1] != '') {
                     query.startTime = moment(this.dateRange[0]).format('YYYY-MM-DD')
                     query.endTime = moment(this.dateRange[1]).format('YYYY-MM-DD')
                 }
-                const result = await batchExport(query)
+                const result = await out(query)
                 if (result.code == 20000) {
                     location.href = result.data;
                 }else {
