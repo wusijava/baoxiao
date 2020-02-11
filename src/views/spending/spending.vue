@@ -15,7 +15,7 @@
                 <Button slot="append" icon="ios-search" @click="beginSearch(0)">搜索</Button>&nbsp;&nbsp;
                <!-- <Button type="primary" @click="batchExport">导出报表</Button>&nbsp;-->&nbsp;
                 <Button type="primary" @click="add">新增消费记录</Button>&nbsp;
-                <Button type="primary" @click="out">导出</Button>&nbsp;
+                <Button type="primary" @click="out">导出Excel</Button>&nbsp;
 
             </div>
             <div class="list">
