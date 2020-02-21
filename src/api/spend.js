@@ -29,3 +29,7 @@ export async function out(params){
     const result = await axios.post(api.spend.out,params);
     return result.data;
 }
+export async function getUploadToken(params){
+    const result = await axios.postForUrl(api.spend.getUploadToken,params);
+    return result;
+}
