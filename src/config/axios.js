@@ -32,6 +32,22 @@ const myAxios = {
     },
     getBaseUrl:function(){
         return baseURL;
+    },
+    postForUrl: async function(url,param){
+        let result = await axios.post(url, param, {
+            baseURL: baseURL,
+            timeout: 1000 * 15,
+            withCredentials: false,
+            headers:{"Content-Type":"application/x-www-form-urlencoded;charset=utf-8",'Accept':'application/json'},
+            transformRequest: [function (data) {
+                let ret = ''
+                for (let it in data) {
+                    ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+                }
+                return ret
+            }]
+        });
+        return result;
     }
 }
 
