@@ -71,7 +71,6 @@
                                                  @click="photoModal = true"
                                             />
                                         </div>
-
                                     </div>
                                 </div>
                             </Col>
@@ -132,9 +131,8 @@
             save: async function () {
                 let query = this.detail;
                 query.url=this.alipays;
-
-                console.log("66666"+query.url)
-                console.log("7777"+query.item)
+               /* console.log("66666"+query.url)
+                console.log("7777"+query.item)*/
                 const result = await spendUpdate(query)
                 if (result.code == 20000) {
                     this.$Message.success("修改成功")
@@ -147,13 +145,13 @@
             getDetail: async function () {
                 let query = new Object()
                 query.id = this.$route.query.id;
-                console.log(query.id)
+                /*console.log(query.id)*/
                 if (query.id == null || query.id == undefined){
                     return;
                 }
                 const result = await detail(query)
                 if (result.code == 20000) {
-                    console.log(2)
+                   /* console.log(2)*/
                     this.detail = result.data;
                 }
             },
@@ -170,7 +168,7 @@
                 //console.log("2")
                 // 此时可以自行将文件上传至服务器
                 let data = await this.getUploadToken("alipays");
-                console.log("2")
+                /*console.log("2")*/
                 if (data) {
                     let url = data.host + data.key;
                     //console.log(data.host)
@@ -183,17 +181,17 @@
                 // console.log("3")
                 let data = result.data;
                 if (data.code == "20000") {
-                    console.log("4")
+                   /* console.log("4")*/
                     return data.data;
                 } else {
-                    console.log("5")
+                    /*console.log("5")*/
                     this.$dialog.alert({
                         message: data.msg,
                     });
                 }
             },
             async uploadToQiniu(file, token, key, url, type) {
-                console.log("6")
+            /*    console.log("6")*/
                 let config = {
                     useCdnDomain: true,   //表示是否使用 cdn 加速域名，为布尔值，true 表示使用，默认为 false。
                     /*region: qiniu.region.z2     // 根据具体提示修改上传地区,当为 null 或 undefined 时，自动分析上传域名区域*/
@@ -204,7 +202,7 @@
                     mimeType: null  //用来限制上传文件类型，为 null 时表示不对文件类型限制；限制类型放到数组里： ["image/png", "image/jpeg", "image/gif"]
                 };
                 let observable = qiniu.upload(file, key, token, putExtra, config);
-                console.log("7")
+               /* console.log("7")*/
                 observable.subscribe({
 
                     next: (result) => {
