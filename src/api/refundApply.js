@@ -34,3 +34,7 @@ export async function selectRefundCount(params){
     const result = await axios.post(api.refundApply.selectRefundCount,params);
     return result.data;
 }
+export async function save(params){
+    const result = await axios.post(api.refund.save,params);
+    return result.data;
+}
