@@ -193,6 +193,7 @@
             changePage: function (cp) {
                 this.getList((cp - 1), this.page.count)
             },del:async function(row){
+
                 /*let query = new Object()
                 query.id =row.id;
                 this.$Modal.confirm({
