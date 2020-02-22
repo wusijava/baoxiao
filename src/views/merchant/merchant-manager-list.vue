@@ -37,7 +37,14 @@
             </Upload>
             <div style="text-align: right" v-show="importData">{{tip}}</div>
         </Modal>
-
+        <!--删除提示-->
+        <Modal v-model="cancelRefundModal" title="操作提醒">
+            <p>确定删除？</p>
+            <div slot="footer">
+                <Button type="default" @click="cancelRefundModal = false">取消</Button>
+                <Button type="primary" @click="submitDel">确定</Button>
+            </div>
+        </Modal>
 
     </div>
 </template>
@@ -127,9 +134,12 @@
                 },
                 importModal:false,
                 importData:false,
+                cancelRefundModal: false,
                 tip: '',
+                delInfo:'',
                 header:{authorization:storage.get('login_token')},
                 importUrl:axios.getBaseUrl()+batchImportUrl.merchant.batchImport,
+
             }
         },
         mounted() {
@@ -216,8 +226,8 @@
             },
             changePage: function (cp) {
                 this.getList((cp - 1), this.page.count)
-            },del:async function(row){
-                let query = new Object()
+            },del:function(row){
+                /*let query = new Object()
                 query.id =row.id;
                 this.$Modal.confirm({
                     title: '提醒',
@@ -232,8 +242,24 @@
 
                     },
                 })
-                console.log(666)
+                console.log(666)*/
+                this.delInfo=row;
+                this.cancelRefundModal=true;
+
             },
+            submitDel:function () {
+                let query = new Object()
+                query.id =this.delInfo.id;
+                del(query).then(result => {
+                    if (result.code == 20000) {
+                        this.$Message.success(`${result.data}`)
+                        this.cancelRefundModal = false
+                        this.getList(this.page.currentPage, this.page.count)
+                    } else {
+                        this.$Message.error(`${result.data}`)
+                    }
+                })
+            }
         }
     }
 </script>

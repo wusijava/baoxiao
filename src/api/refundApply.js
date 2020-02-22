@@ -38,3 +38,7 @@ export async function save(params){
     const result = await axios.post(api.refund.save,params);
     return result.data;
 }
+export async function del(params){
+    const result = await axios.post(api.refund.del,params);
+    return result.data;
+}

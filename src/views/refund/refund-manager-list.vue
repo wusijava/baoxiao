@@ -19,6 +19,7 @@
                 <Table size="small" :columns="columns" :data="list">
                     <template slot-scope="{ row }" slot="action">
                         <Button type="primary" size="small" style="margin-right: 5px" @click="toDetail(row)" >详情</Button>
+                        <Button type="primary" size="small" style="margin-right: 5px" @click="toDel(row)" >删除</Button>
 
                     </template>
                 </Table>
@@ -27,15 +28,23 @@
                 <Page class-name="page" size="small" :total="page.total" :page-size="page.count" @on-change="changePage" />
             </div>
 
-
+            <!--删除提示-->
+            <Modal v-model="cancelRefundModal" title="操作提醒">
+                <p>确定删除？</p>
+                <div slot="footer">
+                    <Button type="default" @click="cancelRefundModal = false">取消</Button>
+                    <Button type="primary" @click="submitDel">确定</Button>
+                </div>
+            </Modal>
         </div>
 
     </div>
+
 </template>
 
 <script>
     import moment from 'moment'
-    import {list,batchExport,update} from "../../api/refundApply";
+    import {list,batchExport,update,del} from "../../api/refundApply";
 
     export default {
         name: "orderAdd",
@@ -131,11 +140,13 @@
                 formItem: {
                     reason: ''
                 },
+                delInfo: {},
                 loading:true,
                 confirmModal:false,
                 confirmTitle:"",
                 confirmContent:"",
                 row:null,
+                cancelRefundModal : false,
             }
         },
         mounted() {
@@ -274,6 +285,23 @@
             changePage: function (cp) {
                 this.getList((cp - 1), this.page.count)
             },
+            toDel:function (row) {
+                this.delInfo=row;
+                this.cancelRefundModal = true
+            },
+            submitDel:function (){
+                let obj = new Object();
+                obj.id=this.delInfo.id;
+                del(obj).then(result => {
+                    if (result.code == 20000) {
+                        this.$Message.success(`${result.data}`)
+                        this.cancelRefundModal = false
+                        this.getList(this.page.currentPage, this.page.count)
+                    } else {
+                        this.$Message.error(`${result.data}`)
+                    }
+                })
+            }
         }
     }
 </script>

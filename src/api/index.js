@@ -37,6 +37,7 @@ const method = {
         settle:'/api/web/pay/refund/order/settle',
         batchExport:'/api/web/pay/refund/order/batchExport',
         save:'order/save',
+        del:"order/del"
     },
     user:{
         login:'/login',
