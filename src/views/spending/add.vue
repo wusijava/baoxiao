@@ -156,7 +156,7 @@
                     return;
                 }
                 if (!this.formItem.price) {
-                    this.$Message.error('请填写价格');
+                    this.$Message.error('请填写支出金额');
                     return;
                 }
                 if (!this.formItem.consumer) {
