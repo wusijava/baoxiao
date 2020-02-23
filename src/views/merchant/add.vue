@@ -63,6 +63,22 @@
                 this.edit =1;
             },
             save: async function () {
+                if (!this.detail.productName) {
+                    this.$Message.error('请填写商品名称');
+                    return;
+                }
+                if (!this.detail.totalPrice) {
+                    this.$Message.error('请填写价格');
+                    return;
+                }
+                if (!this.detail.buyChannel) {
+                    this.$Message.error('请选择购买渠道');
+                    return;
+                }
+                if (!this.detail.buyDate) {
+                    this.$Message.error('请选择购买时间');
+                    return;
+                }
                 if (this.detail.buyDate != '') {
                     //console.log(date)
 

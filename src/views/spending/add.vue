@@ -151,6 +151,22 @@
                 this.edit =1;
             },
             save: async function () {
+                if (!this.formItem.item) {
+                    this.$Message.error('请填写消费明细');
+                    return;
+                }
+                if (!this.formItem.price) {
+                    this.$Message.error('请填写价格');
+                    return;
+                }
+                if (!this.formItem.consumer) {
+                    this.$Message.error('请选择消费者');
+                    return;
+                }
+                if (!this.formItem.date) {
+                    this.$Message.error('请选择消费时间');
+                    return;
+                }
                 if (this.formItem.date != '') {
                     //为什么非要写成this.detail.date
                     this.formItem.date = moment(this.formItem.date).format('YYYY-MM-DD')
