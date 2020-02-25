@@ -91,7 +91,7 @@
                         width: 200
                     },
                     {
-                        title: '本页累计消费',
+                        title: '累计消费',
                         key: 'total',
                         width: 110,
                     },
