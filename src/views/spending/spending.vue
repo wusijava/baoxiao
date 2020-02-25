@@ -20,7 +20,7 @@
             </div>
             <div class="list">
                 <Table size="small" :columns="columns" :data="list">
-                    <template slot-scope="{ row, index }" slot="action">
+                    <template slot-scope="{ row}" slot="action">
                         <Button type="primary" size="small" style="margin-right: 5px" @click="toDetail(row)" >详情</Button>
                         <Button type="primary" size="small" style="margin-right: 5px" @click="del(row)" >删除</Button>
                     </template>
@@ -71,7 +71,7 @@
                     {
                         title: '支出',
                         key: 'price',
-                        width: 410,
+                        width: 310,
                         align: 'center'
                     },
                     {
@@ -89,6 +89,11 @@
                         title: '备注',
                         key: 'remark',
                         width: 200
+                    },
+                    {
+                        title: '本页累计消费',
+                        key: 'total',
+                        width: 110,
                     },
                     {
                         title: '操作',
