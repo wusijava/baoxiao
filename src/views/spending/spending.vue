@@ -71,7 +71,7 @@
                     {
                         title: '支出',
                         key: 'price',
-                        width: 310,
+                        width: 210,
                         align: 'center'
                     },
                     {
@@ -93,6 +93,11 @@
                     {
                         title: '累计消费',
                         key: 'total',
+                        width: 110,
+                    },
+                    {
+                        title: '本页累计消费',
+                        key: 'personTotal',
                         width: 110,
                     },
                     {
