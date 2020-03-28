@@ -52,7 +52,7 @@
 <script>
     import moment from 'moment'
     import storage from '../../storage'
-    import {list,batchExport,del} from "../../api/merchant";
+    import {list,batchExport,del,down} from "../../api/merchant";
     import axios from "../../config/axios";
     import batchImportUrl from "../../api/index";
 
@@ -132,6 +132,11 @@
                 },
                 query: {
                 },
+                url: {
+                    filename: null,
+                },
+
+
                 importModal:false,
                 importData:false,
                 cancelRefundModal: false,
@@ -209,8 +214,15 @@
                     query.endTime = moment(this.dateRange[1]).format('YYYY-MM-DD')
                 }
                 const result = await batchExport(query)
+                console.log(1)
                 if (result.code == 20000) {
+                    console.log(result.data)
+                    let filename=result.data;
+                   // await down({filename: result.data});
+                    //location.href = "http://49.233.192.222:8084/fileDownload";
+                    console.log(result.data)
                     location.href = result.data;
+                    console.log(result.data)
                 }else {
                     this.$Message.error(result.msg);
                 }

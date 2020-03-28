@@ -7,6 +7,7 @@ const method = {
         batchImport: '/Import',
         save: '/save',
         del: '/del',
+        down:"/fileDownload"
 
     },
     spend:{

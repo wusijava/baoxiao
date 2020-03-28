@@ -17,6 +17,7 @@
                 <Button type="primary" @click="add">新增消费记录</Button>&nbsp;
                 <Button type="primary" @click="out">导出Excel</Button>&nbsp;
 
+
             </div>
             <div class="list">
                 <Table size="small" :columns="columns" :data="list">

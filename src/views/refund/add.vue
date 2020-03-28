@@ -243,7 +243,6 @@
                     mimeType: null  //用来限制上传文件类型，为 null 时表示不对文件类型限制；限制类型放到数组里： ["image/png", "image/jpeg", "image/gif"]
                 };
                 let observable = qiniu.upload(file, key, token, putExtra, config);
-                console.log("7")
                 observable.subscribe({
 
                     next: (result) => {
@@ -256,7 +255,6 @@
                         // 接收成功后返回的信息
 
                         this[type] = url;
-                        console.log("222222"+url)
 
                     }
                 })
