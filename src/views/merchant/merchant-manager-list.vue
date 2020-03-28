@@ -17,10 +17,12 @@
                 <Button type="primary" @click="showImport">导入数据</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="add">新增报销记录</Button>&nbsp;
                 <Button type="primary" @click="down">下载导入模板</Button>
+                <a style="font-size:20px;color:red">未报销 RMB:{{this.count.no}}元  报销中 RMB:{{count.ing}}元  已报销 RMB:{{count.yes}}元</a>
             </div>
+
             <div class="list">
                 <Table size="small" :columns="columns" :data="list">
-                    <template slot-scope="{ row, index }" slot="action">
+                    <template slot-scope="{ row }" slot="action">
                         <Button type="primary" size="small" style="margin-right: 5px" @click="toDetail(row)" >详情</Button>
                         <Button type="primary" size="small" style="margin-right: 5px" @click="del(row)" >删除</Button>
                     </template>
@@ -52,7 +54,7 @@
 <script>
     import moment from 'moment'
     import storage from '../../storage'
-    import {list,batchExport,del,down} from "../../api/merchant";
+    import {list,batchExport,del,down,getCount} from "../../api/merchant";
     import axios from "../../config/axios";
     import batchImportUrl from "../../api/index";
 
@@ -61,6 +63,9 @@
         data() {
             return {
                 dateRange: [],
+                count: {no:'',
+                ing: '',
+                yes: ''},
                 columns: [
                     {
                         title: '序号',
@@ -149,6 +154,7 @@
         },
         mounted() {
              this.getList(this.page.currentPage, this.page.count);
+             this.getCount();
         },
         methods: {
             showImport() {
@@ -271,6 +277,16 @@
                         this.$Message.error(`${result.data}`)
                     }
                 })
+            },
+            getCount: async function () {
+                const result = await getCount();
+                console.log(result.data);
+                if (result.code == 20000) {
+                    console.log(result.data.productName)
+                    this.count.no = result.data.remark;
+                    this.count.ing = result.data.buyChannel;
+                    this.count.yes = result.data.productName;
+                }
             }
         }
     }

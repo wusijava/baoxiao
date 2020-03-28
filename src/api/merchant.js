@@ -38,3 +38,7 @@ export async function down(params){
     const result = await axios.post(api.merchant.down, params)
     return result.data;
 }
+export async function getCount(params){
+    const result = await axios.post(api.merchant.getCount, params)
+    return result.data;
+}

@@ -14,6 +14,7 @@
                 <Button slot="append" icon="ios-search" @click="beginSearch(0)">搜索</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="batchExport">导出Excel</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="add">新增销售记录</Button>&nbsp;
+                <a style="font-size:20px;color:red">2020年 :{{this.count.no}}元 &nbsp; 本月利润 RMB:{{this.count.ing}}元&nbsp;  本年利润 RMB:{{this.count.yes}}元</a>
             </div>
             <div class="list">
                 <Table size="small" :columns="columns" :data="list">
@@ -44,13 +45,16 @@
 
 <script>
     import moment from 'moment'
-    import {list,batchExport,update,del} from "../../api/refundApply";
+    import {list,batchExport,update,del,countProfit} from "../../api/refundApply";
 
     export default {
         name: "orderAdd",
         data() {
             return {
                 dateRange: [],
+                count: {no:'',
+                    ing: '',
+                    yes: ''},
                 columns: [
                     {
                         title: '序号',
@@ -151,6 +155,7 @@
         },
         mounted() {
              this.getList(this.page.currentPage, this.page.count);
+             this.countProfit();
         },
 
         methods: {
@@ -301,7 +306,17 @@
                         this.$Message.error(`${result.data}`)
                     }
                 })
+            },
+            countProfit: async function () {
+            const result = await countProfit();
+            console.log(result.data);
+            if (result.code == 20000) {
+                console.log(result.data.productName)
+                this.count.no = result.data.remark;
+                this.count.ing = result.data.buyChannel;
+                this.count.yes = result.data.productName;
             }
+        }
         }
     }
 </script>

@@ -7,7 +7,8 @@ const method = {
         batchImport: '/Import',
         save: '/save',
         del: '/del',
-        down:"/fileDownload"
+        down:"/fileDownload",
+        getCount: "/countReimbursement"
 
     },
     spend:{
@@ -17,7 +18,8 @@ const method = {
         del: '/spendDel',
         save: '/saveSpend',
         out: '/out',
-        getUploadToken:"upload/getToken"
+        getUploadToken:"upload/getToken",
+        getMonth: "spendMonth"
     },
     packet:{
         list:'/api/web/red/packet/list',
@@ -38,7 +40,8 @@ const method = {
         settle:'/api/web/pay/refund/order/settle',
         batchExport:'/api/web/pay/refund/order/batchExport',
         save:'order/save',
-        del:"order/del"
+        del:"order/del",
+        countProfit: "/countProfit"
     },
     user:{
         login:'/login',

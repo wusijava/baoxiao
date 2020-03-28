@@ -42,3 +42,7 @@ export async function del(params){
     const result = await axios.post(api.refund.del,params);
     return result.data;
 }
+export async function countProfit(params){
+    const result = await axios.post(api.refund.countProfit,params);
+    return result.data;
+}

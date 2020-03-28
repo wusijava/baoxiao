@@ -16,7 +16,7 @@
                <!-- <Button type="primary" @click="batchExport">导出报表</Button>&nbsp;-->&nbsp;
                 <Button type="primary" @click="add">新增消费记录</Button>&nbsp;
                 <Button type="primary" @click="out">导出Excel</Button>&nbsp;
-
+                <a style="font-size:20px;color:red">本月已消费 RMB:{{this.month}}元  本年已消费 RMB:{{this.year}}元</a>
 
             </div>
             <div class="list">
@@ -48,7 +48,7 @@
 <script>
     import moment from 'moment'
     import storage from '../../storage'
-    import {list,out,del} from "../../api/spend";
+    import {list,out,del,getMonth} from "../../api/spend";
     import axios from "../../config/axios";
     import batchImportUrl from "../../api/index";
 
@@ -57,6 +57,8 @@
         data() {
             return {
                 dateRange: [],
+                month: '',
+                year: '',
                 columns: [
                     {
                         title: '序号',
@@ -135,7 +137,9 @@
             }
         },
         mounted() {
+            this.getMonth();
              this.getList(this.page.currentPage, this.page.count);
+
         },
         methods: {
             toDetail(row){
@@ -235,6 +239,13 @@
                         this.$Message.error(`${result.data}`)
                     }
                 })
+            },
+            getMonth: async function () {
+                const result = await getMonth()
+                if (result.data.code == 20000) {
+                    this.year = result.data.data.item;
+                    this.month = result.data.data.price;
+                }
             }
         }
     }
