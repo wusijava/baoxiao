@@ -24,6 +24,7 @@
                     <template slot-scope="{ row}" slot="action">
                         <Button type="primary" size="small" style="margin-right: 5px" @click="toDetail(row)" >详情</Button>
                         <Button type="primary" size="small" style="margin-right: 5px" @click="del(row)" >删除</Button>
+                        <Button type="primary" size="small" style="margin-right: 5px" @click="addSameItem(row)" >再来一单</Button>
                     </template>
                 </Table>
             </div>
@@ -38,6 +39,13 @@
                     <Button type="primary" @click="submitDel">确定</Button>
                 </div>
             </Modal>
+            <Modal v-model="addSame" title="操作提醒">
+                <p>确定增加一单？{{title}}</p>
+                <div slot="footer">
+                    <Button type="default" @click="addSame = false">取消</Button>
+                    <Button type="primary" @click="submitAddSame">确定</Button>
+                </div>
+            </Modal>
         </div>
 
 
@@ -48,7 +56,7 @@
 <script>
     import moment from 'moment'
     import storage from '../../storage'
-    import {list,out,del,getMonth} from "../../api/spend";
+    import {list,out,del,getMonth,submitAddSame} from "../../api/spend";
     import axios from "../../config/axios";
     import batchImportUrl from "../../api/index";
 
@@ -58,7 +66,9 @@
             return {
                 dateRange: [],
                 month: '',
+                title: '',
                 year: '',
+
                 columns: [
                     {
                         title: '序号',
@@ -127,8 +137,11 @@
                 },
                 query: {
                 },
+                queryTwo: {
+                },
                 importModal:false,
                 importData:false,
+                addSame: false,
                 tip: '',
                 cancelRefundModal:false,
                 delInfo:'',
@@ -246,6 +259,27 @@
                     this.year = result.data.data.item;
                     this.month = result.data.data.price;
                 }
+            },addSameItem(row){
+                this.queryTwo=row
+                this.title=row.item
+                this.addSame=true
+
+
+            },submitAddSame(){
+                console.log(this.query)
+                submitAddSame(this.queryTwo).then(result => {
+                  /*  if (result.code == 20000) {
+                        this.$Message.success(`添加成功`)
+                        this.addSame = false
+                        this.getList(this.page.currentPage, this.page.count)
+                    } else {
+                        this.$Message.error(`添加失败`)
+                    }*/
+                    this.getMonth()
+                    this.$Message.success(`添加成功`)
+                    this.addSame = false
+                    this.getList(this.page.currentPage, this.page.count)
+                })
             }
         }
     }

@@ -33,8 +33,12 @@ export async function getUploadToken(params){
     const result = await axios.postForUrl(api.spend.getUploadToken,params);
     return result;
 }
-//getMonth
+//getMonth submitAddSame
 export async function getMonth(params){
     const result = await axios.postForUrl(api.spend.getMonth,params);
+    return result;
+}
+export async function submitAddSame(params){
+    const result = await axios.postForUrl(api.spend.submitAddSame,params);
     return result;
 }

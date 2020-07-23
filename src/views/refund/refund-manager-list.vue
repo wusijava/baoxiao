@@ -14,7 +14,7 @@
                 <Button slot="append" icon="ios-search" @click="beginSearch(0)">搜索</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="batchExport">导出Excel</Button>&nbsp;&nbsp;
                 <Button type="primary" @click="add">新增销售记录</Button>&nbsp;
-                <a style="font-size:20px;color:red">2020年 :{{this.count.no}}元 &nbsp; 本月利润 RMB:{{this.count.ing}}元&nbsp;  本年利润 RMB:{{this.count.yes}}元</a>
+                <a style="font-size:15px;color:red">2020年 :{{this.count.no}}元 &nbsp; 本月利润:{{this.count.ing}}元&nbsp;  本年利润:{{this.count.yes}}元</a>
             </div>
             <div class="list">
                 <Table size="small" :columns="columns" :data="list">

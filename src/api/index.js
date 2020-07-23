@@ -19,7 +19,8 @@ const method = {
         save: '/saveSpend',
         out: '/out',
         getUploadToken:"upload/getToken",
-        getMonth: "spendMonth"
+        getMonth: "spendMonth",
+        submitAddSame: "/submitAddSame"
     },
     packet:{
         list:'/api/web/red/packet/list',
