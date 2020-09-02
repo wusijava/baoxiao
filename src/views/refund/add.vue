@@ -166,14 +166,36 @@
                 this.edit =1;
             },
             save: async function () {
-                if (this.formItem.orderDate != '') {
-                    //为什么非要写成this.detail.date
-                    this.formItem.orderDate = moment(this.formItem.orderDate).format('YYYY-MM-DD')
-
+                let query = new Object();
+                if(this.formItem.product){
+                    query.product=this.formItem.product;
                 }
-
-                let query =this.formItem;
+                if(this.formItem.buyerName){
+                    query.buyerName=this.formItem.buyerName;
+                }
+                if(this.formItem.myOrderNo){
+                    query.myOrderNo=this.formItem.myOrderNo;
+                }
+                if(this.formItem.sellMoney){
+                    query.sellMoney=this.formItem.sellMoney;
+                }
+                if(this.formItem.amyOrderNo){
+                    query.amyOrderNo=this.formItem.amyOrderNo;
+                }
+                if(this.formItem.buyMoney){
+                    query.buyMoney=this.formItem.buyMoney;
+                }if(this.formItem.profit){
+                    query.profit=this.formItem.profit;
+                }if(this.formItem.refund){
+                    query.refund=this.formItem.refund;
+                }if(this.formItem.remark){
+                    query.remark=this.formItem.remark;
+                }
                 query.url=this.alipays;
+
+                if(this.formItem.orderDate){
+                    query.orderDate= moment(this.formItem.orderDate).format('YYYY-MM-DD');
+                }
 
                 const result = await save(query)
                 if (result.code == 20000) {

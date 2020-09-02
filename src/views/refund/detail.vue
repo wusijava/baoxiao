@@ -170,8 +170,44 @@
                 }
             },
             save: async function () {
-                let query = this.detail;
+                let query = new Object();
+                if(this.detail.product){
+                    query.product=this.detail.product;
+                }
+                if(this.detail.buyerName){
+                    query.buyerName=this.detail.buyerName;
+                }
+                if(this.detail.myOrderNo){
+                    query.myOrderNo=this.detail.myOrderNo;
+                }
+                if(this.detail.sellMoney){
+                    query.sellMoney=this.detail.sellMoney;
+                }
+                if(this.detail.amyOrderNo){
+                    query.amyOrderNo=this.detail.amyOrderNo;
+                }
+                if(this.detail.buyMoney){
+                    query.buyMoney=this.detail.buyMoney;
+                }if(this.detail.profit){
+                    query.profit=this.detail.profit;
+                }if(this.detail.refund){
+                    query.refund=this.detail.refund;
+                }if(this.detail.remark){
+                    query.remark=this.detail.remark;
+                }
                 query.url=this.alipays;
+                if(this.detail.id){
+                    query.id=this.detail.id;
+                }
+                if(this.detail.orderDate){
+                    query.orderDate=this.detail.orderDate;
+                }
+
+
+
+
+
+                //query.url=this.alipays;
                 const result = await updateLog(query)
                 if (result.code == 20000) {
                     this.$Message.success("修改成功")
