@@ -220,7 +220,7 @@
                     query.endTime = moment(this.dateRange[1]).format('YYYY-MM-DD')
                 }
                 const result = await batchExport(query)
-                console.log(1)
+                //console.log(1)
                 if (result.code == 20000) {
                     console.log(result.data)
                     let filename=result.data;
