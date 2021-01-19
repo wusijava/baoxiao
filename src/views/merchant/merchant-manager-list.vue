@@ -79,7 +79,7 @@
                         width: 450
                     },
                     {
-                        title: '总价格',
+                        title: '价格',
                         key: 'totalPrice',
                         width: 80,
                         align: 'center'

@@ -31,7 +31,7 @@
 
             <!--删除提示-->
             <Modal v-model="cancelRefundModal" title="操作提醒">
-                <p>确定删除？</p>
+                <p>确定删除？!</p>
                 <div slot="footer">
                     <Button type="default" @click="cancelRefundModal = false">取消</Button>
                     <Button type="primary" @click="submitDel">确定</Button>

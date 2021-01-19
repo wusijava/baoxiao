@@ -88,7 +88,7 @@
                         align: 'center'
                     },
                     {
-                        title: '消费人',
+                        title: '消费者',
                         key: 'consumer',
                         width: 200,
                         tooltip: true
